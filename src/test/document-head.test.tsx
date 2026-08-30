@@ -69,13 +69,16 @@ describe('application foundation', () => {
     ).toBeInTheDocument()
   })
 
-  test('Search and main content placeholders are provided', async () => {
+  test('Search and main content are provided', async () => {
     renderHomeLayout()
 
     expect(
-      await screen.findByRole('search', { name: /search and filters/i }),
-    ).toHaveTextContent('Search / Filter Bar')
-    expect(screen.getByRole('search')).toHaveTextContent('Placeholder')
+      await screen.findByRole('search', { name: /search stays/i }),
+    ).toHaveTextContent('Find your stay')
+    expect(
+      screen.getByRole('button', { name: /stay dates/i }),
+    ).toBeInTheDocument()
+    expect(screen.getByRole('combobox', { name: /guests/i })).toHaveTextContent('2')
     expect(screen.getByRole('main')).toHaveTextContent('Main Content')
     expect(screen.getByRole('main')).toHaveTextContent('Placeholder')
   })

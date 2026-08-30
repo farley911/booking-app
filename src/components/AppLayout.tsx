@@ -6,6 +6,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { Link } from '@tanstack/react-router'
 import logo from '../assets/logo.png'
+import { SearchSection } from './SearchSection'
 
 const taxDisclaimer =
   '*Taxes are not included. Prices shown are the lowest available for each night. Prices shown may be available only with multi-night stays or arrival on a specific day.'
@@ -74,23 +75,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
         </Toolbar>
       </AppBar>
 
-      <Box
-        component="section"
-        role="search"
-        aria-label="Search and filters"
-        style={{ width: '100%' }}
-        sx={{
-          p: 2,
-          bgcolor: 'background.paper',
-          borderBottom: 1,
-          borderColor: 'divider',
-        }}
-      >
-        <Typography variant="h6" component="h2">
-          Search / Filter Bar
-        </Typography>
-        <Typography color="text.secondary">Placeholder</Typography>
-      </Box>
+      <SearchSection />
 
       <Box
         component="main"
