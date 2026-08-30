@@ -57,5 +57,6 @@ module.exports = {
     '!src/**/*.d.ts',
     '!src/test/**',
     '!src/**/*.test.{ts,tsx}',
+    '!src/routeTree.gen.ts',
   ],
 }

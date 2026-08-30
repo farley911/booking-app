@@ -1,15 +1,26 @@
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
-  component: App,
+  component: HomePage,
 })
 
-function App() {
+export function HomePage() {
   return (
-    <div className="hello-world">
-      <h1>Hello World!</h1>
+    <Container
+      maxWidth="md"
+      sx={{
+        py: { xs: 6, sm: 10 },
+      }}
+    >
+      <Typography variant="h3" component="h1" gutterBottom>
+        Main Content
+      </Typography>
 
-      {/* App */}
-    </div>
+      <Typography variant="body1" color="text.secondary">
+        Placeholder
+      </Typography>
+    </Container>
   )
 }

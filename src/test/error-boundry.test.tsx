@@ -1,31 +1,16 @@
 import { describe, expect, test } from '@jest/globals'
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import {
   createMemoryHistory,
-  createRootRoute,
   createRoute,
   createRouter,
-  Outlet,
   RouterProvider,
-  type ErrorComponentProps,
 } from '@tanstack/react-router'
-
-function TestErrorBoundary({ error }: ErrorComponentProps) {
-  return (
-    <div>
-      <h1>Something went wrong</h1>
-      <p>{error.message}</p>
-    </div>
-  )
-}
+import { Route as rootRoute } from '../routes/__root'
 
 describe('error boundary', () => {
   test('renders the error UI when a route throws', async () => {
-    const rootRoute = createRootRoute({
-      component: () => <Outlet />,
-      errorComponent: TestErrorBoundary,
-    })
-
     const brokenRoute = createRoute({
       getParentRoute: () => rootRoute,
       path: '/',
@@ -34,10 +19,8 @@ describe('error boundary', () => {
       },
     })
 
-    const routeTree = rootRoute.addChildren([brokenRoute])
-
     const router = createRouter({
-      routeTree,
+      routeTree: rootRoute.addChildren([brokenRoute]),
       history: createMemoryHistory({
         initialEntries: ['/'],
       }),
@@ -52,5 +35,9 @@ describe('error boundary', () => {
     ).toBeInTheDocument()
 
     expect(screen.getByText('Test failure')).toBeInTheDocument()
+
+    await userEvent.click(
+      screen.getByRole('button', { name: /try again/i }),
+    )
   })
 })

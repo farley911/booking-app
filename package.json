@@ -1,5 +1,5 @@
 {
-  "name": "pokedex",
+  "name": "airiks-resort",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,13 +7,14 @@
     "dev": "vite dev",
     "build": "vite build && tsc --noEmit",
     "start": "node .output/server/index.mjs",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "lint:styles": "stylelint \"src/**/*.{css,scss}\"",
-    "lint:styles:fix": "stylelint \"src/**/*.{css,scss}\" --fix",
+    "lint:styles": "stylelint \"src/**/*.{css,scss}\" --allow-empty-input",
+    "lint:styles:fix": "stylelint \"src/**/*.{css,scss}\" --fix --allow-empty-input",
     "check": "npm run typecheck && npm run lint && npm run lint:styles && npm run test:coverage -- --runInBand && npm run build",
     "betterer": "betterer",
     "betterer:ci": "betterer ci"
@@ -21,6 +22,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@fontsource/roboto": "^5.3.0",
     "@mui/icons-material": "^9.4.0",
     "@mui/material": "^9.4.0",
     "@tanstack/react-router": "^1.170.32",
@@ -31,6 +33,10 @@
     "react-hook-form-mui": "^9.0.1"
   },
   "devDependencies": {
+    "@betterer/betterer": "^6.0.0-alpha.1",
+    "@betterer/cli": "^6.0.0-alpha.1",
+    "@betterer/constraints": "^6.0.0-alpha.1",
+    "@betterer/regexp": "^6.0.0-alpha.1",
     "@eslint/js": "^10.0.1",
     "@jest/globals": "^30.5.0",
     "@swc/core": "^1.16.1",

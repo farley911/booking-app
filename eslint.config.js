@@ -14,6 +14,7 @@ export default defineConfig([
     'coverage/**',
     'node_modules/**',
     'src/routeTree.gen.ts',
+    '.betterer.ts',
   ]),
 
   // Node/config/tooling files
