@@ -8,14 +8,13 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select, { type SelectChangeEvent } from '@mui/material/Select'
 import Typography from '@mui/material/Typography'
-import type { Stay } from '../types/api'
+import {
+  useBooking,
+  type SearchCriteria,
+} from './BookingContext'
 import { DateRangeCalendar } from './DateRangeCalendar'
 
-interface SearchValues {
-  fromDate: string
-  toDate: string
-  guests: number
-}
+type SearchValues = SearchCriteria
 
 function validateDateRange({ fromDate, toDate }: SearchValues) {
   if (fromDate.length === 0) {
@@ -34,6 +33,7 @@ function validateDateRange({ fromDate, toDate }: SearchValues) {
 }
 
 export function SearchSection() {
+  const { searchState, searchStays } = useBooking()
   const [datesExpanded, setDatesExpanded] = useState(true)
   const [displayedMonth, setDisplayedMonth] = useState(() => {
     const today = new Date()
@@ -45,29 +45,6 @@ export function SearchSection() {
     guests: 2,
   })
   const [dateError, setDateError] = useState('')
-  const [requestError, setRequestError] = useState('')
-
-  async function submitSearch(searchValues: SearchValues) {
-    setRequestError('')
-
-    try {
-      const searchParameters = new URLSearchParams({
-        from_date: searchValues.fromDate,
-        to_date: searchValues.toDate,
-        guests: String(searchValues.guests),
-      })
-      const response = await fetch(`/stays?${searchParameters.toString()}`)
-
-      if (!response.ok) {
-        throw new Error('Unable to search for stays.')
-      }
-
-      const stays = await response.json() as Stay[]
-      console.log(stays)
-    } catch (error) {
-      setRequestError(String(error))
-    }
-  }
 
   function validateAndSearch(searchValues: SearchValues) {
     const validationError = validateDateRange(searchValues)
@@ -75,7 +52,7 @@ export function SearchSection() {
 
     if (validationError.length === 0) {
       setDatesExpanded(false)
-      void submitSearch(searchValues)
+      void searchStays(searchValues)
     }
   }
 
@@ -207,13 +184,13 @@ export function SearchSection() {
         </Typography>
       )}
 
-      {requestError.length > 0 && (
+      {searchState.error.length > 0 && (
         <Typography
           role="alert"
           color="error"
           sx={{ mt: 1, textAlign: 'center' }}
         >
-          {requestError}
+          {searchState.error}
         </Typography>
       )}
     </Box>

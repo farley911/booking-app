@@ -1,7 +1,8 @@
-import { afterEach, beforeEach, describe, expect, jest, test } from '@jest/globals'
+import { beforeEach, describe, expect, test } from '@jest/globals'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import fetchMock from 'jest-fetch-mock'
+import { BookingProvider } from '../components/BookingContext'
 import { SearchSection } from '../components/SearchSection'
 import type { Stay } from '../types/api'
 
@@ -16,10 +17,16 @@ const expectedStays: Stay[] = [
   },
 ]
 
-let consoleLog: jest.SpiedFunction<typeof console.log>
-
 function mockSuccessfulSearch() {
   fetchMock.mockResponse(JSON.stringify(expectedStays))
+}
+
+function renderSearch() {
+  return render(
+    <BookingProvider>
+      <SearchSection />
+    </BookingProvider>,
+  )
 }
 
 const calendarDayFormatter = new Intl.DateTimeFormat('en-US', {
@@ -55,16 +62,11 @@ async function selectCalendarDay(user: ReturnType<typeof userEvent.setup>, day: 
 
 beforeEach(() => {
   fetchMock.resetMocks()
-  consoleLog = jest.spyOn(console, 'log').mockImplementation(() => undefined)
-})
-
-afterEach(() => {
-  consoleLog.mockRestore()
 })
 
 describe('Search section', () => {
   test('Search is shown', () => {
-    render(<SearchSection />)
+    renderSearch()
 
     expect(
       screen.getByRole('search', { name: /search stays/i }),
@@ -74,7 +76,7 @@ describe('Search section', () => {
   })
 
   test('Datepicker is expanded onLoad', () => {
-    render(<SearchSection />)
+    renderSearch()
 
     const stayDatesButton = screen.getByRole('button', { name: /stay dates/i })
     expect(stayDatesButton).toHaveAttribute('aria-expanded', 'true')
@@ -84,7 +86,7 @@ describe('Search section', () => {
   test('Selecting a date range queries the API', async () => {
     const user = userEvent.setup()
     mockSuccessfulSearch()
-    render(<SearchSection />)
+    renderSearch()
 
     const fromDate = await selectCalendarDay(user, 8)
     expect(fetchMock).not.toHaveBeenCalled()
@@ -97,7 +99,6 @@ describe('Search section', () => {
     })
     expect(await screen.findByText(`${fromDate} – ${toDate}`)).toBeInTheDocument()
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()
-    expect(consoleLog).toHaveBeenCalledWith(expectedStays)
     expect(screen.queryByLabelText(/stay date picker/i)).not.toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /stay dates/i }))
@@ -113,7 +114,7 @@ describe('Search section', () => {
   test('Selecting an invalid date range triggers validation errors', async () => {
     const user = userEvent.setup()
     mockSuccessfulSearch()
-    render(<SearchSection />)
+    renderSearch()
 
     await selectCalendarDay(user, 10)
     expect(fetchMock).not.toHaveBeenCalled()
@@ -134,7 +135,7 @@ describe('Search section', () => {
   test('Selecting a guest value queries the API', async () => {
     const user = userEvent.setup()
     mockSuccessfulSearch()
-    render(<SearchSection />)
+    renderSearch()
 
     const fromDate = await selectCalendarDay(user, 1)
     const toDate = await selectCalendarDay(user, 3)
@@ -142,7 +143,6 @@ describe('Search section', () => {
       expect(fetchMock).toHaveBeenCalledTimes(1)
     })
     fetchMock.mockClear()
-    consoleLog.mockClear()
 
     await user.click(screen.getByRole('combobox', { name: /guests/i }))
     await user.click(screen.getByRole('option', { name: '4' }))
@@ -152,12 +152,11 @@ describe('Search section', () => {
         `/stays?from_date=${fromDate}&to_date=${toDate}&guests=4`,
       )
     })
-    expect(consoleLog).toHaveBeenCalledWith(expectedStays)
   })
 
   test('A guest change validates missing dates without querying the API', async () => {
     const user = userEvent.setup()
-    render(<SearchSection />)
+    renderSearch()
 
     await user.click(screen.getByRole('combobox', { name: /guests/i }))
     await user.click(screen.getByRole('option', { name: '3' }))
@@ -168,7 +167,7 @@ describe('Search section', () => {
 
   test('A guest change validates a partially selected range', async () => {
     const user = userEvent.setup()
-    render(<SearchSection />)
+    renderSearch()
 
     await selectCalendarDay(user, 8)
     await user.click(screen.getByRole('combobox', { name: /guests/i }))
@@ -181,7 +180,7 @@ describe('Search section', () => {
   test('A completed range can be replaced and calendar months can be changed', async () => {
     const user = userEvent.setup()
     mockSuccessfulSearch()
-    render(<SearchSection />)
+    renderSearch()
 
     await selectCalendarDay(user, 8)
     await selectCalendarDay(user, 11)
@@ -212,7 +211,7 @@ describe('Search section', () => {
   test('An API error is announced to the user', async () => {
     const user = userEvent.setup()
     fetchMock.mockResponse('', { status: 500 })
-    render(<SearchSection />)
+    renderSearch()
 
     await selectCalendarDay(user, 1)
     await selectCalendarDay(user, 3)
@@ -220,6 +219,5 @@ describe('Search section', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'Unable to search for stays.',
     )
-    expect(consoleLog).not.toHaveBeenCalled()
   })
 })

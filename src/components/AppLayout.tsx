@@ -1,17 +1,22 @@
 import type { ReactNode } from 'react'
 import AppBar from '@mui/material/AppBar'
+import Badge from '@mui/material/Badge'
 import Box from '@mui/material/Box'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { Link } from '@tanstack/react-router'
 import logo from '../assets/logo.png'
+import { BookingProvider, useBooking } from './BookingContext'
 import { SearchSection } from './SearchSection'
 
 const taxDisclaimer =
   '*Taxes are not included. Prices shown are the lowest available for each night. Prices shown may be available only with multi-night stays or arrival on a specific day.'
 
-export function AppLayout({ children }: { children: ReactNode }) {
+function ApplicationShell({ children }: { children: ReactNode }) {
+  const { cartItems } = useBooking()
+
   return (
     <Box
       sx={{
@@ -68,10 +73,14 @@ export function AppLayout({ children }: { children: ReactNode }) {
             LAS VEGAS
           </Typography>
 
-          <ShoppingCartIcon
-            titleAccess="Shopping cart"
-            fontSize="large"
-          />
+          <IconButton
+            aria-label={`Shopping cart, ${cartItems.length} items`}
+            color="inherit"
+          >
+            <Badge badgeContent={cartItems.length} color="primary">
+              <ShoppingCartIcon titleAccess="Shopping cart" fontSize="large" />
+            </Badge>
+          </IconButton>
         </Toolbar>
       </AppBar>
 
@@ -112,5 +121,13 @@ export function AppLayout({ children }: { children: ReactNode }) {
         </Typography>
       </Box>
     </Box>
+  )
+}
+
+export function AppLayout({ children }: { children: ReactNode }) {
+  return (
+    <BookingProvider>
+      <ApplicationShell>{children}</ApplicationShell>
+    </BookingProvider>
   )
 }

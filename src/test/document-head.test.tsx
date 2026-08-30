@@ -52,7 +52,7 @@ describe('application foundation', () => {
     renderHomeLayout()
 
     expect(
-      await screen.findByRole('heading', { name: /main content/i }),
+      await screen.findByText(/please select a data range/i),
     ).toBeInTheDocument()
 
     const header = screen.getByRole('banner', {
@@ -69,7 +69,7 @@ describe('application foundation', () => {
     ).toBeInTheDocument()
   })
 
-  test('Search and main content are provided', async () => {
+  test('Search and stay list placeholder are provided', async () => {
     renderHomeLayout()
 
     expect(
@@ -79,14 +79,15 @@ describe('application foundation', () => {
       screen.getByRole('button', { name: /stay dates/i }),
     ).toBeInTheDocument()
     expect(screen.getByRole('combobox', { name: /guests/i })).toHaveTextContent('2')
-    expect(screen.getByRole('main')).toHaveTextContent('Main Content')
-    expect(screen.getByRole('main')).toHaveTextContent('Placeholder')
+    expect(screen.getByRole('main')).toHaveTextContent(
+      'Please select a data range to view available stays',
+    )
   })
 
   test('Footer is provided', async () => {
     renderHomeLayout()
 
-    await screen.findByRole('heading', { name: /main content/i })
+    await screen.findByText(/please select a data range/i)
 
     const footer = screen.getByRole('contentinfo')
     expect(footer).toHaveTextContent(
@@ -100,7 +101,7 @@ describe('application foundation', () => {
   test('App wrapper is responsive', async () => {
     renderHomeLayout()
 
-    await screen.findByRole('heading', { name: /main content/i })
+    await screen.findByText(/please select a data range/i)
 
     Object.defineProperty(window, 'innerWidth', {
       configurable: true,
