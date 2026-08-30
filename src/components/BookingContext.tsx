@@ -6,7 +6,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import type { Stay } from '../types/api'
+import type { Booking, Stay } from '../types/api'
 
 export interface SearchCriteria {
   fromDate: string
@@ -25,6 +25,12 @@ export interface CartItem {
 
 export type CartItemInput = Omit<CartItem, 'id'>
 
+export interface CheckoutConfirmation {
+  bookings: Booking[]
+  items: CartItem[]
+  total: number
+}
+
 interface SearchState {
   status: 'idle' | 'loading' | 'success' | 'error'
   criteria: SearchCriteria | null
@@ -39,6 +45,8 @@ interface BookingContextValue {
   addToCart: (item: CartItemInput) => void
   removeFromCart: (id: number) => void
   clearCart: () => void
+  confirmation: CheckoutConfirmation | null
+  setConfirmation: (confirmation: CheckoutConfirmation | null) => void
 }
 
 const initialSearchState: SearchState = {
@@ -53,6 +61,8 @@ const BookingContext = createContext<BookingContextValue | null>(null)
 export function BookingProvider({ children }: { children: ReactNode }) {
   const [searchState, setSearchState] = useState(initialSearchState)
   const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [confirmation, setConfirmation] =
+    useState<CheckoutConfirmation | null>(null)
   const nextCartItemId = useRef(1)
 
   async function searchStays(criteria: SearchCriteria) {
@@ -107,7 +117,9 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     clearCart: () => {
       setCartItems([])
     },
-  }), [cartItems, searchState])
+    confirmation,
+    setConfirmation,
+  }), [cartItems, confirmation, searchState])
 
   return (
     <BookingContext.Provider value={value}>

@@ -25,7 +25,7 @@ exports[`coverage: statements never decreases`] = {
 
 exports[`no new TypeScript suppressions`] = {
   value: `{
-    "src/routeTree.gen.ts:958624024": [
+    "src/routeTree.gen.ts:3398867864": [
       [2, 3, 11, "Do not introduce TypeScript suppressions", "2783191048"]
     ]
   }`
@@ -33,7 +33,7 @@ exports[`no new TypeScript suppressions`] = {
 
 exports[`no new ESLint suppressions`] = {
   value: `{
-    "src/routeTree.gen.ts:958624024": [
+    "src/routeTree.gen.ts:3398867864": [
       [0, 3, 14, "Do not introduce ESLint suppressions", "1298441941"]
     ]
   }`

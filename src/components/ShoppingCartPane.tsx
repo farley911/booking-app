@@ -5,6 +5,7 @@ import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
+import { useNavigate } from '@tanstack/react-router'
 import { useBooking, type CartItem } from './BookingContext'
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
@@ -126,6 +127,7 @@ export function ShoppingCartPane({
   onClose: () => void
 }) {
   const { cartItems, clearCart } = useBooking()
+  const navigate = useNavigate()
   const subtotal = cartItems.reduce(
     (total, item) => total + item.totalPrice,
     0,
@@ -227,7 +229,12 @@ export function ShoppingCartPane({
           <Button
             type="button"
             variant="contained"
+            disabled={cartItems.length === 0}
             fullWidth
+            onClick={() => {
+              onClose()
+              void navigate({ to: '/checkout' })
+            }}
             sx={{ mt: 2, py: 1.25 }}
           >
             Checkout

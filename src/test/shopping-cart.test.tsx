@@ -86,9 +86,14 @@ async function renderCartApp() {
     getParentRoute: () => rootRoute,
     path: '/',
   })
+  const checkoutRoute = createRoute({
+    component: () => <h1>Checkout page</h1>,
+    getParentRoute: () => rootRoute,
+    path: '/checkout',
+  })
   const router = createRouter({
     history: createMemoryHistory({ initialEntries: ['/'] }),
-    routeTree: rootRoute.addChildren([homeRoute]),
+    routeTree: rootRoute.addChildren([homeRoute, checkoutRoute]),
   })
   await router.load()
 
@@ -202,7 +207,7 @@ describe('Shopping cart', () => {
       .toBeDisabled()
   })
 
-  test('The Checkout button is a placeholder', async () => {
+  test('Clicking Checkout routes the user to checkout', async () => {
     const user = userEvent.setup()
     const { router } = await renderCartApp()
     await user.click(screen.getByRole('button', { name: /add king suite/i }))
@@ -210,7 +215,8 @@ describe('Shopping cart', () => {
 
     await user.click(within(cart).getByRole('button', { name: /checkout/i }))
 
-    expect(router.state.location.pathname).toBe('/')
-    expect(within(cart).getByRole('button', { name: /checkout/i })).toBeVisible()
+    expect(router.state.location.pathname).toBe('/checkout')
+    expect(await screen.findByRole('heading', { name: /checkout page/i }))
+      .toBeInTheDocument()
   })
 })

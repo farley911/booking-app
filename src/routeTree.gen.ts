@@ -10,11 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as ConfirmationRouteImport } from './routes/confirmation'
 import { Route as DetailsRoom_typeRouteImport } from './routes/details.$room_type'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfirmationRoute = ConfirmationRouteImport.update({
+  id: '/confirmation',
+  path: '/confirmation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DetailsRoom_typeRoute = DetailsRoom_typeRouteImport.update({
@@ -25,27 +37,35 @@ const DetailsRoom_typeRoute = DetailsRoom_typeRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/checkout': typeof CheckoutRoute
+  '/confirmation': typeof ConfirmationRoute
   '/details/$room_type': typeof DetailsRoom_typeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/checkout': typeof CheckoutRoute
+  '/confirmation': typeof ConfirmationRoute
   '/details/$room_type': typeof DetailsRoom_typeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/checkout': typeof CheckoutRoute
+  '/confirmation': typeof ConfirmationRoute
   '/details/$room_type': typeof DetailsRoom_typeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/details/$room_type'
+  fullPaths: '/' | '/checkout' | '/confirmation' | '/details/$room_type'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/details/$room_type'
-  id: '__root__' | '/' | '/details/$room_type'
+  to: '/' | '/checkout' | '/confirmation' | '/details/$room_type'
+  id: '__root__' | '/' | '/checkout' | '/confirmation' | '/details/$room_type'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CheckoutRoute: typeof CheckoutRoute
+  ConfirmationRoute: typeof ConfirmationRoute
   DetailsRoom_typeRoute: typeof DetailsRoom_typeRoute
 }
 
@@ -56,6 +76,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confirmation': {
+      id: '/confirmation'
+      path: '/confirmation'
+      fullPath: '/confirmation'
+      preLoaderRoute: typeof ConfirmationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/details/$room_type': {
@@ -70,6 +104,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CheckoutRoute: CheckoutRoute,
+  ConfirmationRoute: ConfirmationRoute,
   DetailsRoom_typeRoute: DetailsRoom_typeRoute,
 }
 export const routeTree = rootRouteImport

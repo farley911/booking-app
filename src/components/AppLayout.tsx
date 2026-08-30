@@ -19,7 +19,9 @@ function ApplicationShell({ children }: { children: ReactNode }) {
   const { cartItems } = useBooking()
   const [cartOpen, setCartOpen] = useState(false)
   const location = useLocation()
-  const isDetailsRoute = location.pathname.startsWith('/details/')
+  const isSearchHidden = location.pathname.startsWith('/details/')
+    || location.pathname === '/checkout'
+    || location.pathname === '/confirmation'
 
   return (
     <Box
@@ -100,7 +102,7 @@ function ApplicationShell({ children }: { children: ReactNode }) {
         }}
       />
 
-      {!isDetailsRoute && <SearchSection />}
+      {!isSearchHidden && <SearchSection />}
 
       <Box
         component="main"
