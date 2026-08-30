@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Badge from '@mui/material/Badge'
 import Box from '@mui/material/Box'
@@ -10,12 +10,14 @@ import { Link, useLocation } from '@tanstack/react-router'
 import logo from '../assets/logo.png'
 import { BookingProvider, useBooking } from './BookingContext'
 import { SearchSection } from './SearchSection'
+import { ShoppingCartPane } from './ShoppingCartPane'
 
 const taxDisclaimer =
   '*Taxes are not included. Prices shown are the lowest available for each night. Prices shown may be available only with multi-night stays or arrival on a specific day.'
 
 function ApplicationShell({ children }: { children: ReactNode }) {
   const { cartItems } = useBooking()
+  const [cartOpen, setCartOpen] = useState(false)
   const location = useLocation()
   const isDetailsRoute = location.pathname.startsWith('/details/')
 
@@ -77,7 +79,12 @@ function ApplicationShell({ children }: { children: ReactNode }) {
 
           <IconButton
             aria-label={`Shopping cart, ${cartItems.length} items`}
+            aria-expanded={cartOpen}
+            aria-controls={cartOpen ? 'shopping-cart-heading' : undefined}
             color="inherit"
+            onClick={() => {
+              setCartOpen(true)
+            }}
           >
             <Badge badgeContent={cartItems.length} color="primary">
               <ShoppingCartIcon titleAccess="Shopping cart" fontSize="large" />
@@ -85,6 +92,13 @@ function ApplicationShell({ children }: { children: ReactNode }) {
           </IconButton>
         </Toolbar>
       </AppBar>
+
+      <ShoppingCartPane
+        open={cartOpen}
+        onClose={() => {
+          setCartOpen(false)
+        }}
+      />
 
       {!isDetailsRoute && <SearchSection />}
 

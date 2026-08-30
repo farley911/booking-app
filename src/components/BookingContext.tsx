@@ -2,6 +2,7 @@ import {
   createContext,
   useContext,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react'
@@ -14,12 +15,15 @@ export interface SearchCriteria {
 }
 
 export interface CartItem {
+  id: number
   stay: Stay
   fromDate: string
   toDate: string
   guests: number
   totalPrice: number
 }
+
+export type CartItemInput = Omit<CartItem, 'id'>
 
 interface SearchState {
   status: 'idle' | 'loading' | 'success' | 'error'
@@ -32,7 +36,9 @@ interface BookingContextValue {
   searchState: SearchState
   searchStays: (criteria: SearchCriteria) => Promise<void>
   cartItems: CartItem[]
-  addToCart: (item: CartItem) => void
+  addToCart: (item: CartItemInput) => void
+  removeFromCart: (id: number) => void
+  clearCart: () => void
 }
 
 const initialSearchState: SearchState = {
@@ -47,6 +53,7 @@ const BookingContext = createContext<BookingContextValue | null>(null)
 export function BookingProvider({ children }: { children: ReactNode }) {
   const [searchState, setSearchState] = useState(initialSearchState)
   const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const nextCartItemId = useRef(1)
 
   async function searchStays(criteria: SearchCriteria) {
     setSearchState({
@@ -90,7 +97,15 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     searchStays,
     cartItems,
     addToCart: (item) => {
-      setCartItems((items) => [...items, item])
+      const id = nextCartItemId.current
+      nextCartItemId.current += 1
+      setCartItems((items) => [...items, { ...item, id }])
+    },
+    removeFromCart: (id) => {
+      setCartItems((items) => items.filter((item) => item.id !== id))
+    },
+    clearCart: () => {
+      setCartItems([])
     },
   }), [cartItems, searchState])
 

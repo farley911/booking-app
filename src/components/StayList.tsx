@@ -10,7 +10,7 @@ import { Link } from '@tanstack/react-router'
 import type { Stay } from '../types/api'
 import {
   useBooking,
-  type CartItem,
+  type CartItemInput,
   type SearchCriteria,
 } from './BookingContext'
 
@@ -34,7 +34,7 @@ function StayCard({
 }: {
   stay: Stay
   criteria: SearchCriteria
-  onSelect: (item: CartItem) => void
+  onSelect: (item: CartItemInput) => void
 }) {
   const totalPrice = stay.price * numberOfNights(criteria)
 
