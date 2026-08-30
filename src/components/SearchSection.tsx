@@ -34,16 +34,20 @@ function validateDateRange({ fromDate, toDate }: SearchValues) {
 
 export function SearchSection() {
   const { searchState, searchStays } = useBooking()
-  const [datesExpanded, setDatesExpanded] = useState(true)
+  const [datesExpanded, setDatesExpanded] = useState(
+    searchState.criteria === null,
+  )
   const [displayedMonth, setDisplayedMonth] = useState(() => {
     const today = new Date()
     return new Date(today.getFullYear(), today.getMonth(), 1)
   })
-  const [values, setValues] = useState<SearchValues>({
-    fromDate: '',
-    toDate: '',
-    guests: 2,
-  })
+  const [values, setValues] = useState<SearchValues>(
+    searchState.criteria ?? {
+      fromDate: '',
+      toDate: '',
+      guests: 2,
+    },
+  )
   const [dateError, setDateError] = useState('')
 
   function validateAndSearch(searchValues: SearchValues) {

@@ -112,6 +112,24 @@ describe('Booking API', () => {
     expect(body).toEqual({ error: 'Invalid stay parameters' })
   })
 
+  test('User requests the details for a room type', async () => {
+    const { body, response } = await requestJson('/stays/king_suite')
+
+    expect(response.status).toBe(200)
+    expect(body).toEqual(expect.objectContaining({
+      id: 1,
+      name: 'Premier King Suite',
+      room_type: 'king_suite',
+    }))
+  })
+
+  test('User requests details for an unknown room type', async () => {
+    const { body, response } = await requestJson('/stays/not-a-room')
+
+    expect(response.status).toBe(404)
+    expect(body).toEqual({ error: 'Stay not found' })
+  })
+
   test('User requests reviews for a stay with reviews', async () => {
     const { body, response } = await requestJson('/stays/king_suite/reviews')
 

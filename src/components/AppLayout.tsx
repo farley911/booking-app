@@ -6,7 +6,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import { Link } from '@tanstack/react-router'
+import { Link, useLocation } from '@tanstack/react-router'
 import logo from '../assets/logo.png'
 import { BookingProvider, useBooking } from './BookingContext'
 import { SearchSection } from './SearchSection'
@@ -16,6 +16,8 @@ const taxDisclaimer =
 
 function ApplicationShell({ children }: { children: ReactNode }) {
   const { cartItems } = useBooking()
+  const location = useLocation()
+  const isDetailsRoute = location.pathname.startsWith('/details/')
 
   return (
     <Box
@@ -84,7 +86,7 @@ function ApplicationShell({ children }: { children: ReactNode }) {
         </Toolbar>
       </AppBar>
 
-      <SearchSection />
+      {!isDetailsRoute && <SearchSection />}
 
       <Box
         component="main"

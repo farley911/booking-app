@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
+import { Link } from '@tanstack/react-router'
 import type { Stay } from '../types/api'
 import {
   useBooking,
@@ -82,7 +83,12 @@ function StayCard({
           </Typography>
         </CardContent>
         <CardActions sx={{ justifyContent: 'flex-end', p: 2, pt: 0 }}>
-          <Button type="button">Details</Button>
+          <Link
+            to="/details/$room_type"
+            params={{ room_type: stay.room_type }}
+          >
+            <Button component="span">Details</Button>
+          </Link>
           <Button
             type="button"
             variant="contained"
@@ -121,6 +127,8 @@ export function StayList() {
     )
   }
 
+  const criteria = searchState.criteria
+
   return (
     <Box component="section" aria-labelledby="available-stays-heading">
       <Typography
@@ -150,7 +158,7 @@ export function StayList() {
           <StayCard
             key={stay.id}
             stay={stay}
-            criteria={searchState.criteria}
+            criteria={criteria}
             onSelect={addToCart}
           />
         ))}

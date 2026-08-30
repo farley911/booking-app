@@ -128,12 +128,14 @@ function CalendarMonth({
 export function DateRangeCalendar({
   displayedMonth,
   fromDate,
+  layout = 'overlay',
   toDate,
   onChangeMonth,
   onSelect,
 }: {
   displayedMonth: Date
   fromDate: string
+  layout?: 'inline' | 'overlay'
   toDate: string
   onChangeMonth: (offset: number) => void
   onSelect: (date: string) => void
@@ -148,18 +150,19 @@ export function DateRangeCalendar({
     <Box
       id="stay-dates-picker"
       aria-label="Stay date picker"
+      data-layout={layout}
+      style={{ position: layout === 'inline' ? 'static' : 'absolute' }}
       sx={{
         bgcolor: 'background.paper',
         boxSizing: 'border-box',
-        boxShadow: 4,
-        left: '50%',
-        maxWidth: 920,
-        p: { xs: 2, sm: 3 },
-        position: 'absolute',
-        top: '100%',
-        transform: 'translateX(-50%)',
+        boxShadow: layout === 'inline' ? 0 : 4,
+        left: layout === 'inline' ? 'auto' : '50%',
+        maxWidth: layout === 'inline' ? '100%' : 920,
+        p: layout === 'inline' ? 0 : { xs: 2, sm: 3 },
+        top: layout === 'inline' ? 'auto' : '100%',
+        transform: layout === 'inline' ? 'none' : 'translateX(-50%)',
         width: '100%',
-        zIndex: 1200,
+        zIndex: layout === 'inline' ? 'auto' : 1200,
       }}
     >
       <Box
@@ -167,13 +170,22 @@ export function DateRangeCalendar({
           alignItems: 'flex-start',
           display: 'grid',
           gap: 1,
-          gridTemplateColumns: 'auto minmax(0, 1fr) auto',
+          gridTemplateAreas: layout === 'inline'
+            ? '"previous next" "calendar calendar"'
+            : 'none',
+          gridTemplateColumns: layout === 'inline'
+            ? '1fr 1fr'
+            : 'auto minmax(0, 1fr) auto',
         }}
       >
         <IconButton
           aria-label="Show previous months"
           onClick={() => {
             onChangeMonth(-1)
+          }}
+          sx={{
+            gridArea: layout === 'inline' ? 'previous' : 'auto',
+            justifySelf: 'start',
           }}
         >
           <ArrowBackIosNewIcon />
@@ -183,9 +195,12 @@ export function DateRangeCalendar({
           sx={{
             display: 'grid',
             gap: { xs: 4, md: 6 },
+            gridArea: layout === 'inline' ? 'calendar' : 'auto',
             gridTemplateColumns: {
               xs: 'minmax(0, 1fr)',
-              md: 'repeat(2, minmax(0, 1fr))',
+              md: layout === 'inline'
+                ? 'minmax(0, 1fr)'
+                : 'repeat(2, minmax(0, 1fr))',
             },
           }}
         >
@@ -195,18 +210,24 @@ export function DateRangeCalendar({
             toDate={toDate}
             onSelect={onSelect}
           />
-          <CalendarMonth
-            month={nextMonth}
-            fromDate={fromDate}
-            toDate={toDate}
-            onSelect={onSelect}
-          />
+          {layout === 'overlay' && (
+            <CalendarMonth
+              month={nextMonth}
+              fromDate={fromDate}
+              toDate={toDate}
+              onSelect={onSelect}
+            />
+          )}
         </Box>
 
         <IconButton
           aria-label="Show next months"
           onClick={() => {
             onChangeMonth(1)
+          }}
+          sx={{
+            gridArea: layout === 'inline' ? 'next' : 'auto',
+            justifySelf: 'end',
           }}
         >
           <ArrowForwardIosIcon />

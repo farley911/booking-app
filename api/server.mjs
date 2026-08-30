@@ -153,6 +153,28 @@ async function handleRequest(request, response) {
     }
   }
 
+  const stayMatch = /^\/stays\/([^/]+)\/?$/.exec(url.pathname)
+  if (request.method === 'GET' && stayMatch) {
+    let roomType
+
+    try {
+      roomType = decodeURIComponent(stayMatch[1])
+    } catch {
+      sendJson(response, 400, { error: 'Invalid room type' })
+      return
+    }
+
+    const stay = stays.find((candidate) => candidate.room_type === roomType)
+
+    if (!stay) {
+      sendJson(response, 404, { error: 'Stay not found' })
+      return
+    }
+
+    sendJson(response, 200, stay)
+    return
+  }
+
   if (request.method === 'POST' && (url.pathname === '/bookings' || url.pathname === '/bookings/')) {
     try {
       const body = await readJsonBody(request)

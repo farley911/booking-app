@@ -135,7 +135,6 @@ describe('Stay list', () => {
     await screen.findByText(firstStay.name)
     expect(fetchMock).toHaveBeenCalledTimes(1)
 
-    await user.click(screen.getByRole('button', { name: /details/i }))
     await user.click(screen.getByRole('button', { name: /select room/i }))
 
     expect(fetchMock).toHaveBeenCalledTimes(1)
