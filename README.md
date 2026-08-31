@@ -4,6 +4,10 @@ This is a React-based hotel booking demo built by Airik Farley as a frontend tec
 
 The product design and visual inspiration are based on the W Las Vegas resort experience.
 
+## Timebox
+
+The application was feature complete in 5 hours.
+
 ## Render Deployment
 
 The application is deployed on Render:
