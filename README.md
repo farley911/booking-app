@@ -8,6 +8,10 @@ The product design and visual inspiration are based on the W Las Vegas resort ex
 
 The application was feature complete in 5 hours.
 
+## Video Demo
+
+A 10 minute video demo of the showcase can be viewed here: https://www.youtube.com/watch?v=Ec1YmZhRNs0
+
 ## Render Deployment
 
 The application is deployed on Render:
