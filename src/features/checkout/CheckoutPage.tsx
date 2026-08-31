@@ -8,8 +8,8 @@ import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { Link, useNavigate } from '@tanstack/react-router'
-import type { Booking, CreateBooking } from '../types/api'
-import { useBooking, type CartItem } from './BookingContext'
+import type { Booking, CreateBooking } from '../../types/api'
+import { useBooking, type CartItem } from '../global/BookingContext'
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',

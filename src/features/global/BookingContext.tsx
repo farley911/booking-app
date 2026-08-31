@@ -6,7 +6,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import type { Booking, Stay } from '../types/api'
+import type { Booking, Stay } from '../../types/api'
 
 export interface SearchCriteria {
   fromDate: string

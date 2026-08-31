@@ -9,7 +9,7 @@ import {
   test,
 } from '@jest/globals'
 import fetchMock from 'jest-fetch-mock'
-import type { AddRoomReview, CreateBooking } from '../types/api'
+import type { AddRoomReview, CreateBooking } from '../../types/api'
 
 let apiProcess: ChildProcessWithoutNullStreams
 let apiUrl = ''

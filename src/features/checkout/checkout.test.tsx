@@ -11,11 +11,12 @@ import {
   RouterProvider,
 } from '@tanstack/react-router'
 import Button from '@mui/material/Button'
-import { AppLayout } from '../components/AppLayout'
-import { useBooking, type CartItemInput } from '../components/BookingContext'
-import { CheckoutRoutePage } from '../routes/checkout'
-import { ConfirmationRoutePage } from '../routes/confirmation'
-import type { Booking, Stay } from '../types/api'
+import { AppLayout } from '../global/AppLayout'
+import { useBooking, type CartItemInput } from '../global/BookingContext'
+import { ConfirmationRoutePage } from '../../routes/confirmation'
+import { Route as checkoutLazyRoute } from '../../routes/checkout.lazy'
+import type { Booking, Stay } from '../../types/api'
+import { CheckoutPage } from './CheckoutPage'
 
 const kingSuite: Stay = {
   description: 'A spacious suite with a king bed.',
@@ -90,7 +91,7 @@ async function renderCheckoutApp(initialEntry = '/') {
     path: '/',
   })
   const checkoutRoute = createRoute({
-    component: CheckoutRoutePage,
+    component: CheckoutPage,
     getParentRoute: () => rootRoute,
     path: '/checkout',
   })
@@ -162,6 +163,8 @@ beforeEach(() => {
 
 describe('Checkout', () => {
   test('Checkout route is defined', async () => {
+    expect(checkoutLazyRoute.options.component).toBe(CheckoutPage)
+
     const user = userEvent.setup()
     const { router } = await renderCheckoutApp()
 

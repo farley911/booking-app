@@ -2,9 +2,9 @@ import { beforeEach, describe, expect, test } from '@jest/globals'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import fetchMock from 'jest-fetch-mock'
-import { BookingProvider } from '../components/BookingContext'
-import { SearchSection } from '../components/SearchSection'
-import type { Stay } from '../types/api'
+import type { Stay } from '../../types/api'
+import { BookingProvider } from './BookingContext'
+import { SearchSection } from './SearchSection'
 
 const expectedStays: Stay[] = [
   {

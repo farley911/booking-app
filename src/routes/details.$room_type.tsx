@@ -1,6 +1,6 @@
 import Container from '@mui/material/Container'
 import { createFileRoute } from '@tanstack/react-router'
-import { StayDetails } from '../components/StayDetails'
+import { StayDetails } from '../features/room/StayDetails'
 
 export const Route = createFileRoute('/details/$room_type')({
   component: RoomDetailsPage,

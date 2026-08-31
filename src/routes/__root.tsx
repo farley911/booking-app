@@ -13,7 +13,7 @@ import {
 } from '@tanstack/react-router'
 import { Button, Container, Typography } from '@mui/material'
 import { blue } from '@mui/material/colors'
-import { AppLayout } from '../components/AppLayout'
+import { AppLayout } from '../features/global/AppLayout'
 
 const theme = createTheme({
   typography: {

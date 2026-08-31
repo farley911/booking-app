@@ -7,12 +7,12 @@ import CardMedia from '@mui/material/CardMedia'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
 import { Link } from '@tanstack/react-router'
-import type { Stay } from '../types/api'
+import type { Stay } from '../../types/api'
 import {
   useBooking,
   type CartItemInput,
   type SearchCriteria,
-} from './BookingContext'
+} from '../global/BookingContext'
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',

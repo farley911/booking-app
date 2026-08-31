@@ -10,10 +10,10 @@ import {
   Outlet,
   RouterProvider,
 } from '@tanstack/react-router'
-import { AppLayout } from '../components/AppLayout'
-import { useBooking } from '../components/BookingContext'
-import { HomePage } from '../routes/index'
-import type { Stay } from '../types/api'
+import { AppLayout } from '../global/AppLayout'
+import { useBooking } from '../global/BookingContext'
+import { HomePage } from '../../routes/index'
+import type { Stay } from '../../types/api'
 
 const calendarDayFormatter = new Intl.DateTimeFormat('en-US', {
   day: 'numeric',

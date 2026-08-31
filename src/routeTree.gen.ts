@@ -23,7 +23,7 @@ const CheckoutRoute = CheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any).lazy(() => import('./routes/checkout.lazy').then((d) => d.Route))
 const ConfirmationRoute = ConfirmationRouteImport.update({
   id: '/confirmation',
   path: '/confirmation',

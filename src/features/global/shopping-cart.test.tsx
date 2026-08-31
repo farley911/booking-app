@@ -10,9 +10,9 @@ import {
   RouterProvider,
 } from '@tanstack/react-router'
 import Button from '@mui/material/Button'
-import { AppLayout } from '../components/AppLayout'
-import { useBooking, type CartItemInput } from '../components/BookingContext'
-import type { Stay } from '../types/api'
+import type { Stay } from '../../types/api'
+import { AppLayout } from './AppLayout'
+import { useBooking, type CartItemInput } from './BookingContext'
 
 const kingSuite: Stay = {
   description: 'A spacious suite with a king bed.',

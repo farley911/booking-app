@@ -17,9 +17,9 @@ import Select, { type SelectChangeEvent } from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { Link } from '@tanstack/react-router'
-import type { Review, Stay } from '../types/api'
-import { DateRangeCalendar } from './DateRangeCalendar'
-import { useBooking, type SearchCriteria } from './BookingContext'
+import type { Review, Stay } from '../../types/api'
+import { DateRangeCalendar } from '../global/DateRangeCalendar'
+import { useBooking, type SearchCriteria } from '../global/BookingContext'
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',

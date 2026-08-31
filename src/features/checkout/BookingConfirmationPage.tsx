@@ -4,7 +4,7 @@ import Container from '@mui/material/Container'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { Link } from '@tanstack/react-router'
-import { useBooking } from './BookingContext'
+import { useBooking } from '../global/BookingContext'
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',

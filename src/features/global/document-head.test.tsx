@@ -9,10 +9,10 @@ import {
   Outlet,
   RouterProvider,
 } from '@tanstack/react-router'
-import { AppLayout } from '../components/AppLayout'
-import { getRouter } from '../router'
-import { HomePage } from '../routes/index'
-import { documentHead } from '../routes/__root'
+import { getRouter } from '../../router'
+import { HomePage } from '../../routes/index'
+import { documentHead } from '../../routes/__root'
+import { AppLayout } from './AppLayout'
 
 const theme = createTheme({
   palette: {
