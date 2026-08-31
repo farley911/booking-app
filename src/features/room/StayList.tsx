@@ -122,7 +122,7 @@ export function StayList() {
   if (searchState.status !== 'success' || searchState.criteria === null) {
     return (
       <Typography color="text.secondary" sx={{ py: 8, textAlign: 'center' }}>
-        Please select a data range to view available stays
+        Please select a date range to view available stays
       </Typography>
     )
   }

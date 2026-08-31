@@ -16,7 +16,7 @@
     "test:coverage": "jest --coverage",
     "lint:styles": "stylelint \"src/**/*.{css,scss}\" --allow-empty-input",
     "lint:styles:fix": "stylelint \"src/**/*.{css,scss}\" --fix --allow-empty-input",
-    "check": "npm run typecheck && npm run lint && npm run lint:styles && npm run test:coverage -- --runInBand && npm run build",
+    "check": "npm run typecheck && npm run lint && npm run lint:styles && npm run test:coverage -- --runInBand && npm run betterer:ci && npm run build",
     "betterer": "betterer",
     "betterer:ci": "betterer ci"
   },

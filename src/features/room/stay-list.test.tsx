@@ -78,7 +78,7 @@ describe('Stay list', () => {
     renderBookingApp()
 
     expect(await screen.findByText(
-      'Please select a data range to view available stays',
+      'Please select a date range to view available stays',
     )).toBeInTheDocument()
   })
 

@@ -52,7 +52,7 @@ describe('application foundation', () => {
     renderHomeLayout()
 
     expect(
-      await screen.findByText(/please select a data range/i),
+      await screen.findByText(/please select a date range/i),
     ).toBeInTheDocument()
 
     const header = screen.getByRole('banner', {
@@ -80,14 +80,14 @@ describe('application foundation', () => {
     ).toBeInTheDocument()
     expect(screen.getByRole('combobox', { name: /guests/i })).toHaveTextContent('2')
     expect(screen.getByRole('main')).toHaveTextContent(
-      'Please select a data range to view available stays',
+      'Please select a date range to view available stays',
     )
   })
 
   test('Footer is provided', async () => {
     renderHomeLayout()
 
-    await screen.findByText(/please select a data range/i)
+    await screen.findByText(/please select a date range/i)
 
     const footer = screen.getByRole('contentinfo')
     expect(footer).toHaveTextContent(
@@ -101,7 +101,7 @@ describe('application foundation', () => {
   test('App wrapper is responsive', async () => {
     renderHomeLayout()
 
-    await screen.findByText(/please select a data range/i)
+    await screen.findByText(/please select a date range/i)
 
     Object.defineProperty(window, 'innerWidth', {
       configurable: true,
