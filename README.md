@@ -37,3 +37,15 @@ POST /bookings
 POSTed reviews and bookings are stored in memory and reset when the API
 process restarts. The API also permits cross-origin requests for clients that
 call port 3001 directly.
+
+## Deploy to Render
+
+This repository includes a Render Blueprint that builds the TanStack Start
+application and runs the application server alongside the mock API.
+
+1. Push the repository to GitHub, GitLab, or Bitbucket.
+2. In Render, select **New > Blueprint** and connect the repository.
+3. Apply the detected `render.yaml` Blueprint.
+
+The deployed mock API still stores submitted reviews and bookings in memory,
+so they reset whenever the Render service restarts or redeploys.

@@ -49,6 +49,9 @@ export function BookingConfirmationPage() {
       <Typography sx={{ mt: 1 }}>
         Your reservation is confirmed.
       </Typography>
+      <Typography sx={{ mt: 1 }}>
+        No payment was processed.
+      </Typography>
 
       <Box
         component="ul"
