@@ -91,6 +91,7 @@ npm run check
 		* Reason: Polishing the app is a rabbit hole I didn't want to fall into.
 * Because I choose to have my process be driven heavily by LLMs I spent the majority of my time working on defining Feature docs and providing them as LLM prompts.
 	* Impact: This created a front heavy lift where most of the time was invested prior to writing code, and not much time remained to build the features out, limiting my polish.
+* I did not add any precommit hooks since I didn't think they would add much value to this demo
 
 ## What Next?
 I would build out the missing UX. Particularly around the search, I don't like that there is a missing /availability endpoint and that the rooms aren't filtered by guest count. I would also spend more time mapping out the actual error/loading states and improve validation and user feedback. I'd clean up some CSS and responsive behaviors like the image size, or the oblong carousel buttons.
@@ -105,3 +106,5 @@ Additionally I added rules to enforce those gates whenever an agent completed a 
 Once I had established that I broke the Epic down into smaller tasks and wrote up tech specs, acceptance criteria, swagger, and gherkin scenarios. Those technical docs were provided to the LLM as the prompt for it to use.
 
 After the LLM had completed the task I manually reviewed the output for any issues and manually tested in the browser.
+
+You can view the actual markdown docs I used to prompt the LLM here: https://github.com/farley911/booking-app/tree/main/.ai_prompts
