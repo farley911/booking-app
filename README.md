@@ -14,7 +14,7 @@ A 10 minute video demo of the showcase can be viewed here: https://www.youtube.c
 
 ## Render Deployment
 
-The application is deployed on Render:
+A live demo of the application is deployed on Render:
 
 https://airiks-resort.onrender.com/
 
